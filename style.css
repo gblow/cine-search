@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;800&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Work Sans', sans-serif;
+}
+
+body {
+    background-image: linear-gradient(to right top, #a178df, #827fe0, #6384dd, #4487d6, #2589cb, #0087bd, #0084ae, #00809f, #00788a, #006f73, #00655b, #005b44);
+}
+
+title {
+    text-align: center;
+}
