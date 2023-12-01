@@ -5,30 +5,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="Description" content="Enter your description here"/>
-  <link rel="style" href="style.css">
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"> -->
-  <!-- <link rel="reset" href="reset.css"> -->
-  
-
   <title>CineSearch</title>
+  <meta name="Description" content="Enter your description here"/>
+  <link rel="stylesheet" href="style.css">
+  <link rel="reset" href="reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
-    <!-- Main Page -->
-    <!-- Header with Local Storage button -->
-    <div class="header" id="header">
-    <header>CineSearch</header>
-    <button>View Previous Results</button>
-</div>
-<div class="inner-div" id="inner-div">
-    <h3>Would you like to watch a Movie or T.V show?</h3>
-    <button id="movie-btn"> Movie </button>
-    <button id="tv-btn"> T.V Show </button>
-</div>
+
+    <!-- Header Section -->
+    <div class="main-div" id="main-div">
+        <div class="top-bar" id="top-bar">
+            <h1>CineSearch</h1>
+            <button id="results-btn">View Previous Results</button>
+        </div>
+    <!-- Main Page Section -->
+    <div class="main-page" id="main-page">
+        <h3>Would you like to watch a Movie or T.V show?</h3>
+        <button id="movie-btn"> Movie </button>
+        <button id="tv-btn"> T.V Show </button>
+    </div>
 
 <!-- Second Page with Genre -->
-<div class="inner-div" id="inner-div">
+<div class="genre-page" id="genre-page">
     <h3>What genre are you vibing with?</h3>
     <button id="action-btn"> Action </button>
     <button id="horror-btn"> Horror </button>
@@ -39,7 +39,7 @@
 </div>
 
 <!-- Third Page with Streaming Services -->
-<div class="inner-div" id="inner-div">
+<div class="streaming-page" id="streaming-page">
     <h3>What is your preferred streaming service?</h3>
     <button id="netflix-btn"> Netflix </button>
     <button id="max-btn"> Max </button>
@@ -53,25 +53,16 @@
 </div>
 
 <!-- Fourth Page with Results -->
-<div class="inner-div" id="inner-div">
+<div class="results-page" id="results-page">
     <div class="results-table">
         <h3>Results</h3>
-    <ol class="watchmod-list">
-        <header class="watch">
-        <h3>Ranked List</h3>
-        <li>#1</li>
-        <li>#2</li>
-        <li>#3</li>
-        <li>#4</li>
-        <li>#5</li>
-    </ol>
-    <ol class="wiki-list">
-        <li>#1</li>
-        <li>#2</li>
-        <li>#3</li>
-        <li>#4</li>
-        <li>#5</li>
-    </ol>
+        <div class="columns" id="result-col">
+            <div class="column">
+              First column
+            </div>
+            <div class="column" >
+              Second column
+            </div>
 </div>
     
 </body>
