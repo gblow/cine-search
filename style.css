@@ -53,6 +53,17 @@ body {
     margin: 0 10px; /* Add margin for space between buttons */
 }
 
+.genre-page button {
+    background-color: #6384dd;
+    color: white;
+    padding: 10px 20px;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
 
 
 .genre-page{
