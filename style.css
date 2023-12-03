@@ -94,16 +94,53 @@ button {
     cursor: pointer;
     border-radius: 10px;
     margin: 10px; /* Add margin for space between buttons */
-    display: inline-block; /* Make buttons appear in the same line */
+    display: center inline-block; /* Make buttons appear in the same line */
 }
 
 .streaming-page {
     display: none;
 }
 
+.streaming-page h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 50px;
+   
+}
+
+.streaming-page button {
+    background-color: #6080d900;
+    color: white;
+    padding: 10px 20px;
+    font-size: 30px;
+    border: solid;
+    border-color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: 10px; /* Add margin for space between buttons */
+    display: inline-block; /* Make buttons appear in the same line */
+    
+}
+
 /* Results Page  */
+
+
 .results-page {
     display: none;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-weight: bolder;
+
+}
+
+.results-page h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 50px;
 }
 
 #result-col {
@@ -111,6 +148,9 @@ button {
     border-style: solid;
     width: 50%;
     margin: 0 auto;
+    color: white;
+    font-size: 20px;
+    font-family: 'Jost', sans-serif;
 }
 
 @media (max-width: 600px) {
