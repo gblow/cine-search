@@ -4,7 +4,7 @@ var mainPageBtn1 = document.getElementById('tv-btn');
 var genrePage = document.querySelector('.genre-page');
 var streamingPage = document.querySelector('.streaming-page');
 var resultsPage = document.querySelector('.results-page');
-var prevResultsPageBtn = document.getElementById('pre-results-btn');
+var prevResultsPageBtn = document.getElementById('prev-results-btn');
 
 
 
@@ -24,7 +24,7 @@ var streamingPageBtn4 = document.getElementById('vudu-btn');
 var streamingPageBtn5 = document.getElementById('paramount-btn'); 
 var streamingPageBtn6 = document.getElementById('apple-btn'); 
 var streamingPageBtn7 = document.getElementById('disney-btn'); 
-var streamingPageBtn8 = document.getElementById('peacockß-btn'); 
+var streamingPageBtn8 = document.getElementById('peacock-btn'); 
 
 
 
@@ -49,8 +49,6 @@ genrePageBtn3.addEventListener("click", goToStreamingPage);
 genrePageBtn4.addEventListener("click", goToStreamingPage);
 genrePageBtn5.addEventListener("click", goToStreamingPage);
 
-
-
 //Streaming page function and click listener
 
 function goToResultsPage() {
@@ -70,5 +68,11 @@ streamingPageBtn6.addEventListener("click", goToResultsPage);
 streamingPageBtn7.addEventListener("click", goToResultsPage);
 streamingPageBtn8.addEventListener("click", goToResultsPage);
 
-
+function goToResultsPage2() {
+    mainPage.style.display = "none";
+    genrePage.style.display = "none";
+    streamingPage.style.display = "none";
+    resultsPage.style.display = "block";
+}
+prevResultsPageBtn.addEventListener("click", goToResultsPage2)
 
