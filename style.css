@@ -73,6 +73,17 @@ button {
     align-self: center;
 }
 
+.main-page, .genre-page {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 2s ease, visibility 2s ease;
+}
+
+.main-page.visible, .genre-page.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
 .genre-page {
     display: none;
 }
