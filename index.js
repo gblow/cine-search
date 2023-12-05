@@ -4,7 +4,7 @@ var mainPageBtn1 = document.getElementById('tv-btn');
 var genrePage = document.querySelector('.genre-page');
 var streamingPage = document.querySelector('.streaming-page');
 var resultsPage = document.querySelector('.results-page');
-var prevResultsPageBtn = document.getElementById('pre-results-btn');
+var prevResultsPageBtn = document.getElementById('prev-results-btn');
 const WatchmodeAPI = "cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp"
 const WikiAPI = "6e5f803bd59e151c8d9173f058396cb9"
 
@@ -27,6 +27,40 @@ var streamingPageBtn7 = document.getElementById('disney-btn');
 var streamingPageBtn8 = document.getElementById('peacock-btn'); 
 
 
+// function showMainPage() {
+//     mainPage.classList.add('visible');
+//     genrePage.classList.remove('visible');
+//     streamingPage.classList.remove('visible');
+//     resultsPage.classList.remove('visible');
+// }
+
+// function showGenrePage() {
+//     mainPage.classList.remove('visible');
+//     genrePage.classList.add('visible');
+//     streamingPage.classList.remove('visible');
+//     resultsPage.classList.remove('visible');
+// }
+
+// function showStreamingPage() {
+//     mainPage.classList.remove('visible');
+//     genrePage.classList.remove('visible');
+//     streamingPage.classList.add('visible');
+//     resultsPage.classList.remove('visible');
+// }
+
+// function showResultsPage() {
+//     mainPage.classList.remove('visible');
+//     genrePage.classList.remove('visible');
+//     streamingPage.classList.remove('visible');
+//     resultsPage.classList.add('visible');
+// }
+
+// mainPageBtn0.addEventListener('click', showGenrePage);
+// mainPageBtn1.addEventListener('click', showGenrePage);
+// genrePageBtn0.addEventListener('click', function() {
+//     showStreamingPage();
+//     fetchDataByGenre('Action');
+// });
 
 function goToGenrePage() {
     mainPage.style.display = "none";
@@ -41,6 +75,7 @@ function goToStreamingPage() {
     genrePage.style.display = "none";
     streamingPage.style.display = "block";
 }
+
 
 function fetchDataByGenre(genre) {
     var apiUrl = 'https://api.watchmode.com/v1/genres/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp'
@@ -100,3 +135,11 @@ streamingPageBtn5.addEventListener("click", goToResultsPage);
 streamingPageBtn6.addEventListener("click", goToResultsPage);
 streamingPageBtn7.addEventListener("click", goToResultsPage);
 streamingPageBtn8.addEventListener("click", goToResultsPage);
+
+function goToResultsPage2() {
+    mainPage.style.display = "none";
+    genrePage.style.display = "none";
+    streamingPage.style.display = "none";
+    resultsPage.style.display = "block";
+}
+prevResultsPageBtn.addEventListener("click", goToResultsPage2)
