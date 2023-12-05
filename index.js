@@ -7,7 +7,7 @@ var resultsPage = document.querySelector('.results-page');
 var prevResultsPageBtn = document.getElementById('prev-results-btn');
 const WatchmodeAPI = "cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp"
 const WikiAPI = "6e5f803bd59e151c8d9173f058396cb9"
-=======
+var type = "";
 
 
 
@@ -17,7 +17,7 @@ var genrePageBtn2 = document.getElementById("scifi-btn");
 var genrePageBtn3 = document.getElementById("rom-btn");
 var genrePageBtn4 = document.getElementById("com-btn");
 var genrePageBtn5 = document.getElementById("kids-btn");
-
+var genreResults = "";
 
 var streamingPageBtn0 = document.getElementById('netflix-btn'); 
 var streamingPageBtn1 = document.getElementById('max-btn'); 
@@ -28,7 +28,7 @@ var streamingPageBtn5 = document.getElementById('paramount-btn');
 var streamingPageBtn6 = document.getElementById('apple-btn'); 
 var streamingPageBtn7 = document.getElementById('disney-btn'); 
 var streamingPageBtn8 = document.getElementById('peacock-btn'); 
-
+var streamingResults = "";
 
 
 // function showMainPage() {
@@ -71,8 +71,32 @@ function goToGenrePage() {
     mainPage.style.display = "none";
     genrePage.style.display = "block";
 }
-mainPageBtn0.addEventListener("click", goToGenrePage);
+
+// Main page function and click listener
+function fetchDataByType(type) {
+    var apiUrl1 = 'https://api.watchmode.com/v1/autocomplete-search/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&search_value=&search_type=3'
+
+    fetch(apiUrl1)
+        .then(response => response.json())
+        .then(data => {
+            for(var i = 0; i < data.length; i++) {
+                if(type === data[i].name) {
+                    typeResults = data[i];
+                }
+            }
+            console.log(typeResults)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+}
+
+mainPageBtn0.addEventListener("click", function() {
+    goToGenrePage();
+    fetchDataByType("Movie")
+});
 mainPageBtn1.addEventListener("click", goToGenrePage);
+
 
 
 function goToStreamingPage() {
@@ -82,7 +106,7 @@ function goToStreamingPage() {
 }
 
 
-
+//Genre page function and click listener
 function fetchDataByGenre(genre) {
     var apiUrl = 'https://api.watchmode.com/v1/genres/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp'
 
@@ -96,7 +120,7 @@ function fetchDataByGenre(genre) {
         })
 }
 
-//Genre page function and click listener
+
 genrePageBtn0.addEventListener("click", function(){
     goToStreamingPage();
     fetchDataByGenre("Action")
@@ -132,7 +156,29 @@ function goToResultsPage() {
     resultsPage.style.display = "block";
 }
 
-streamingPageBtn0.addEventListener("click", goToResultsPage);
+function fetchDataByStreaming(streaming) {
+    var apiUrl = 'https://api.watchmode.com/v1/title/345534/sources/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp'
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log(`data for ${streamingResults}:`, data);
+            for(var i = 0; i < data.length; i++) {
+                if(streaming === data[i].name) {
+                    streamingResults = data[i];
+                }
+            }
+            console.log(streamingResults)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+}
+
+streamingPageBtn0.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("Netflix")
+});
 streamingPageBtn1.addEventListener("click", goToResultsPage);
 streamingPageBtn2.addEventListener("click", goToResultsPage);
 streamingPageBtn3.addEventListener("click", goToResultsPage);
