@@ -7,6 +7,9 @@ var resultsPage = document.querySelector('.results-page');
 var prevResultsPageBtn = document.getElementById('prev-results-btn');
 const WatchmodeAPI = "cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp"
 const WikiAPI = "6e5f803bd59e151c8d9173f058396cb9"
+=======
+
+
 
 var genrePageBtn0 = document.getElementById("action-btn");
 var genrePageBtn1 = document.getElementById("horror-btn");
@@ -25,6 +28,7 @@ var streamingPageBtn5 = document.getElementById('paramount-btn');
 var streamingPageBtn6 = document.getElementById('apple-btn'); 
 var streamingPageBtn7 = document.getElementById('disney-btn'); 
 var streamingPageBtn8 = document.getElementById('peacock-btn'); 
+
 
 
 // function showMainPage() {
@@ -62,6 +66,7 @@ var streamingPageBtn8 = document.getElementById('peacock-btn');
 //     fetchDataByGenre('Action');
 // });
 
+
 function goToGenrePage() {
     mainPage.style.display = "none";
     genrePage.style.display = "block";
@@ -75,6 +80,7 @@ function goToStreamingPage() {
     genrePage.style.display = "none";
     streamingPage.style.display = "block";
 }
+
 
 
 function fetchDataByGenre(genre) {
@@ -143,3 +149,4 @@ function goToResultsPage2() {
     resultsPage.style.display = "block";
 }
 prevResultsPageBtn.addEventListener("click", goToResultsPage2)
+
