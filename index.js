@@ -18,6 +18,7 @@ var genrePageBtn3 = document.getElementById("rom-btn");
 var genrePageBtn4 = document.getElementById("com-btn");
 var genrePageBtn5 = document.getElementById("kids-btn");
 var genreResults = "";
+var selectedGenre = "";
 
 var streamingPageBtn0 = document.getElementById('netflix-btn'); 
 var streamingPageBtn1 = document.getElementById('max-btn'); 
@@ -28,43 +29,9 @@ var streamingPageBtn5 = document.getElementById('paramount-btn');
 var streamingPageBtn6 = document.getElementById('apple-btn'); 
 var streamingPageBtn7 = document.getElementById('disney-btn'); 
 var streamingPageBtn8 = document.getElementById('peacock-btn'); 
-var streamingResults = "";
+var sourcesResults = "";
 
 
-// function showMainPage() {
-//     mainPage.classList.add('visible');
-//     genrePage.classList.remove('visible');
-//     streamingPage.classList.remove('visible');
-//     resultsPage.classList.remove('visible');
-// }
-
-// function showGenrePage() {
-//     mainPage.classList.remove('visible');
-//     genrePage.classList.add('visible');
-//     streamingPage.classList.remove('visible');
-//     resultsPage.classList.remove('visible');
-// }
-
-// function showStreamingPage() {
-//     mainPage.classList.remove('visible');
-//     genrePage.classList.remove('visible');
-//     streamingPage.classList.add('visible');
-//     resultsPage.classList.remove('visible');
-// }
-
-// function showResultsPage() {
-//     mainPage.classList.remove('visible');
-//     genrePage.classList.remove('visible');
-//     streamingPage.classList.remove('visible');
-//     resultsPage.classList.add('visible');
-// }
-
-// mainPageBtn0.addEventListener('click', showGenrePage);
-// mainPageBtn1.addEventListener('click', showGenrePage);
-// genrePageBtn0.addEventListener('click', function() {
-//     showStreamingPage();
-//     fetchDataByGenre('Action');
-// });
 
 
 function goToGenrePage() {
@@ -114,6 +81,12 @@ function fetchDataByGenre(genre) {
         .then(response => response.json())
         .then(data => {
             console.log(`data for ${genre}:`, data);
+            for(var i = 0; i < data.length; i++) {
+                if(genre === data[i].name) {
+                    genreResults = data[i];
+                }
+            }
+            console.log(genreResults);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -123,27 +96,33 @@ function fetchDataByGenre(genre) {
 
 genrePageBtn0.addEventListener("click", function(){
     goToStreamingPage();
-    fetchDataByGenre("Action")
+    selectedGenre = "Action";
+    fetchDataByGenre(selectedGenre);
 });
 genrePageBtn1.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("Horror")
+    goToStreamingPage();
+    selectedGenre = "Horror";
+    fetchDataByGenre(selectedGenre);
 });
 genrePageBtn2.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("SciFi/Fantasy")
+    goToStreamingPage();
+    selectedGenre = "Sci-Fi & Fantasy";
+    fetchDataByGenre(selectedGenre);
 });
 genrePageBtn3.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("Romance")
+    goToStreamingPage();
+    selectedGenre = "Romance";
+    fetchDataByGenre(selectedGenre);
 });
 genrePageBtn4.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("Comedy")
+    goToStreamingPage();
+    selectedGenre = "Comedy";
+    fetchDataByGenre(selectedGenre);
 });
 genrePageBtn5.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("Kids/Animation")
+    goToStreamingPage();
+    selectedGenre = "Kids";
+    fetchDataByGenre(selectedGenre);
 });
 
 
@@ -156,19 +135,20 @@ function goToResultsPage() {
     resultsPage.style.display = "block";
 }
 
-function fetchDataByStreaming(streaming) {
-    var apiUrl = 'https://api.watchmode.com/v1/title/345534/sources/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp'
+function fetchDataByStreaming(sources, selectedGenre) {
+    var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&source_ids=203'
 
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            console.log(`data for ${streamingResults}:`, data);
+            var filteredResults = [];
+            // console.log(`data for ${sourcesResults}:`, data);
             for(var i = 0; i < data.length; i++) {
-                if(streaming === data[i].name) {
-                    streamingResults = data[i];
+                if(sources === data[i].name && selectedGenre === data[i].genre) {
+                    filteredResults.push(data[i]);
                 }
             }
-            console.log(streamingResults)
+            console.log(filteredResults)
         })
         .catch(error => {
             console.error('Error:', error);
@@ -177,16 +157,40 @@ function fetchDataByStreaming(streaming) {
 
 streamingPageBtn0.addEventListener("click", function() {
     goToResultsPage();
-    fetchDataByStreaming("Netflix")
+    fetchDataByStreaming("Netflix", selectedGenre);
 });
-streamingPageBtn1.addEventListener("click", goToResultsPage);
-streamingPageBtn2.addEventListener("click", goToResultsPage);
-streamingPageBtn3.addEventListener("click", goToResultsPage);
-streamingPageBtn4.addEventListener("click", goToResultsPage);
-streamingPageBtn5.addEventListener("click", goToResultsPage);
-streamingPageBtn6.addEventListener("click", goToResultsPage);
-streamingPageBtn7.addEventListener("click", goToResultsPage);
-streamingPageBtn8.addEventListener("click", goToResultsPage);
+streamingPageBtn1.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("Max", selectedGenre);
+});
+streamingPageBtn2.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("Hulu", selectedGenre);
+});
+streamingPageBtn3.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("Amazon Prime", selectedGenre);
+});
+streamingPageBtn4.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("Vudu", selectedGenre);
+});
+streamingPageBtn5.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("Paramount", selectedGenre);
+});
+streamingPageBtn6.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("AppleTV", selectedGenre);
+});
+streamingPageBtn7.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("Disney+", selectedGenre);
+});
+streamingPageBtn8.addEventListener("click", function() {
+    goToResultsPage();
+    fetchDataByStreaming("Peacock", selectedGenre);
+});
 
 function goToResultsPage2() {
     mainPage.style.display = "none";
@@ -195,4 +199,17 @@ function goToResultsPage2() {
     resultsPage.style.display = "block";
 }
 prevResultsPageBtn.addEventListener("click", goToResultsPage2)
+
+let url = 'https://api.watchmode.com/v1/list-titles/?apiKey='+WatchmodeAPI+"&movies&tv_series";
+// let url = 'https://api.watchmode.com/v1/sources/?apiKey='+WatchmodeAPI
+fetch(url, { method: 'Get' })
+    .then((res) => res.json())
+    .then((json) => {
+        console.log(json);
+    });
+
+    // Fill out form get type, genre, and source
+    // Using genre api get the genre id from the genre data array, loop through data from genre api find matching genre and grab it's id
+    // Using sources api get the source id that matches the selected source, loop through data from sources api find matching source and grab it's id
+    // construct url with type genre id and source id and send api request to get data
 
