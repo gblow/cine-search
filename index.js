@@ -148,12 +148,7 @@ function fetchDataByGenre(genre) {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            for(var i = 0; i < data.length; i++) {
-                if(genre === data[i].name) {
-                    genreResults = data[i];
-                }
-            }
-            console.log(genreResults);
+            console.log(`data for ${genre}:`, data);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -171,9 +166,29 @@ genrePage.addEventListener("click", function(event) {
 
     console.log("Survey results:", surveyResults);
     goToStreamingPage();
-    selectedGenre = "";
-    fetchDataByGenre(selectedGenre);
+    fetchDataByGenre("Action")
 });
+genrePageBtn1.addEventListener("click", function(){
+    goToStreamingPage()
+    fetchDataByGenre("Horror")
+});
+genrePageBtn2.addEventListener("click", function(){
+    goToStreamingPage()
+    fetchDataByGenre("SciFi/Fantasy")
+});
+genrePageBtn3.addEventListener("click", function(){
+    goToStreamingPage()
+    fetchDataByGenre("Romance")
+});
+genrePageBtn4.addEventListener("click", function(){
+    goToStreamingPage()
+    fetchDataByGenre("Comedy")
+});
+genrePageBtn5.addEventListener("click", function(){
+    goToStreamingPage()
+    fetchDataByGenre("Kids/Animation")
+});
+
 
 //Streaming page function and click listener
 
@@ -216,13 +231,16 @@ streamingPage.addEventListener("click", function(event) {
     console.log("Survey results:", surveyResults);
 
     goToResultsPage();
-    displayResults();
-
+    fetchDataByStreaming("Netflix")
 });
-
-
-
-//@TODO: Still have to save to local storage in the previous results page.
+streamingPageBtn1.addEventListener("click", goToResultsPage);
+streamingPageBtn2.addEventListener("click", goToResultsPage);
+streamingPageBtn3.addEventListener("click", goToResultsPage);
+streamingPageBtn4.addEventListener("click", goToResultsPage);
+streamingPageBtn5.addEventListener("click", goToResultsPage);
+streamingPageBtn6.addEventListener("click", goToResultsPage);
+streamingPageBtn7.addEventListener("click", goToResultsPage);
+streamingPageBtn8.addEventListener("click", goToResultsPage);
 
 function goToResultsPage2() {
     mainPage.style.display = "none";
@@ -232,6 +250,19 @@ function goToResultsPage2() {
 }
 
 prevResultsPageBtn.addEventListener("click", goToResultsPage2)
+
+let url = 'https://api.watchmode.com/v1/list-titles/?apiKey='+WatchmodeAPI+"&movies&tv_series";
+// let url = 'https://api.watchmode.com/v1/sources/?apiKey='+WatchmodeAPI
+fetch(url, { method: 'Get' })
+    .then((res) => res.json())
+    .then((json) => {
+        console.log(json);
+    });
+
+    // Fill out form get type, genre, and source
+    // Using genre api get the genre id from the genre data array, loop through data from genre api find matching genre and grab it's id
+    // Using sources api get the source id that matches the selected source, loop through data from sources api find matching source and grab it's id
+    // construct url with type genre id and source id and send api request to get data
 
 
     // Fill out form get type, genre, and source
