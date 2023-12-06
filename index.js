@@ -145,6 +145,8 @@ function goToStreamingPage() {
 function fetchDataByGenre(genre) {
     var apiUrl = 'https://api.watchmode.com/v1/genres/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp'
 
+
+
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
