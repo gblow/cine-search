@@ -251,13 +251,6 @@ function goToResultsPage2() {
 
 prevResultsPageBtn.addEventListener("click", goToResultsPage2)
 
-let url = 'https://api.watchmode.com/v1/list-titles/?apiKey='+WatchmodeAPI+"&movies&tv_series";
-// let url = 'https://api.watchmode.com/v1/sources/?apiKey='+WatchmodeAPI
-fetch(url, { method: 'Get' })
-    .then((res) => res.json())
-    .then((json) => {
-        console.log(json);
-    });
 
     // Fill out form get type, genre, and source
     // Using genre api get the genre id from the genre data array, loop through data from genre api find matching genre and grab it's id
