@@ -17,6 +17,8 @@ var surveyResults = {
     streaming: '', // Streaming provider
 };
 
+
+
 function goToGenrePage() {
     mainPage.style.display = "none";
     genrePage.style.display = "block";
@@ -24,30 +26,35 @@ function goToGenrePage() {
 
 // Actually show the results (in a different function maybe?)
     // @TODO: move this into a separate function
-    var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=popularity_desc" + "&limit=20"; 
-    console.log("API URL:", apiUrl)
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            var filteredResults = [];
-            console.log(`data for listTitles`, data);
-
+    
             // @TODO: 
             // You have the movies back in data, filtered by genre, streaming provider, etc.
             // Now you actually display this on the page
 
 
-            for(var i = 0; i < data.length; i++) {
-                if(sources === data[i].name && selectedGenre === data[i].genre) {
-                    filteredResults.push(data[i]);
-                }
+            function displayResults() {
+                var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=popularity_desc" + "&limit=20";
+            
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log ("apiData",data)
+            
+                        var firstColumnUl = document.querySelector('#result-col .column:first-child ul');
+                        firstColumnUl.innerHTML = '';
+
+                        for (var i = 0; i < data.titles.length; i++) {
+                            var li = document.createElement('li');
+                            li.textContent = data.titles[i].title;
+                            firstColumnUl.appendChild(li);
+                        }
+                    }) 
+                
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             }
-            console.log(filteredResults)
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            
 
 mainPage.addEventListener("click", function(event) {
     // They clicked on either move or tv show, so store that selection
@@ -145,6 +152,7 @@ streamingPage.addEventListener("click", function(event) {
     console.log("Survey results:", surveyResults);
 
     goToResultsPage();
+    displayResults();
 })
 
 
