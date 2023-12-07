@@ -1,5 +1,5 @@
 var mainPage = document.querySelector('.main-page');
-var mainPageBtn0 = document.getElementById('movie-btn'); 
+var moveOrTvBtn = document.getElementById('movie-btn'); 
 var mainPageBtn1 = document.getElementById('tv-btn'); 
 var genrePage = document.querySelector('.genre-page');
 var streamingPage = document.querySelector('.streaming-page');
@@ -11,25 +11,30 @@ var type = "";
 
 
 
-var genrePageBtn0 = document.getElementById("action-btn");
-var genrePageBtn1 = document.getElementById("horror-btn");
-var genrePageBtn2 = document.getElementById("scifi-btn");
-var genrePageBtn3 = document.getElementById("rom-btn");
-var genrePageBtn4 = document.getElementById("com-btn");
-var genrePageBtn5 = document.getElementById("kids-btn");
+// var genrePageBtn0 = document.getElementById("action-btn");
+// var genrePageBtn1 = document.getElementById("horror-btn");
+// var genrePageBtn2 = document.getElementById("scifi-btn");
+// var genrePageBtn3 = document.getElementById("rom-btn");
+// var genrePageBtn4 = document.getElementById("com-btn");
+// var genrePageBtn5 = document.getElementById("kids-btn");
 var genreResults = "";
 var selectedGenre = "";
 
-var streamingPageBtn0 = document.getElementById('netflix-btn'); 
-var streamingPageBtn1 = document.getElementById('max-btn'); 
-var streamingPageBtn2 = document.getElementById('hulu-btn'); 
-var streamingPageBtn3 = document.getElementById('amazon-btn'); 
-var streamingPageBtn4 = document.getElementById('vudu-btn'); 
-var streamingPageBtn5 = document.getElementById('paramount-btn'); 
-var streamingPageBtn6 = document.getElementById('apple-btn'); 
-var streamingPageBtn7 = document.getElementById('disney-btn'); 
-var streamingPageBtn8 = document.getElementById('peacock-btn'); 
+// var streamingPageBtn0 = document.getElementById('netflix-btn'); 
+// var streamingPageBtn1 = document.getElementById('max-btn'); 
+// var streamingPageBtn2 = document.getElementById('hulu-btn'); 
+// var streamingPageBtn3 = document.getElementById('amazon-btn'); 
+// var streamingPageBtn4 = document.getElementById('vudu-btn'); 
+// var streamingPageBtn5 = document.getElementById('paramount-btn'); 
+// var streamingPageBtn6 = document.getElementById('apple-btn'); 
+// var streamingPageBtn7 = document.getElementById('disney-btn'); 
+// var streamingPageBtn8 = document.getElementById('peacock-btn'); 
 var sourcesResults = "";
+var surveyResults = {
+    type: '', // either tv or move
+    genre: '',
+    streaming: '', // Streaming provider
+};
 
 
 
@@ -58,7 +63,14 @@ function fetchDataByType(type) {
         })
 }
 
-mainPageBtn0.addEventListener("click", function() {
+mainPage.addEventListener("click", function(event) {
+    // They clicked on either move or tv show, so store that selection
+    console.log("event target is:", event.target);
+    console.log("event target is:", event.target.getAttribute("data-type"));
+    var type = event.target.getAttribute("data-type");
+    surveyResults.type = type;
+    console.log("Survey results", surveyResults);
+
     goToGenrePage();
     fetchDataByType("Movie")
 });
@@ -94,36 +106,53 @@ function fetchDataByGenre(genre) {
 }
 
 
-genrePageBtn0.addEventListener("click", function(){
-    goToStreamingPage();
-    selectedGenre = "Action";
-    fetchDataByGenre(selectedGenre);
-});
-genrePageBtn1.addEventListener("click", function(){
+// Use event delegation, using this will help you need less query selectors (because you don't need a selector for each btn)
+// And will make your life easier, as you also will only need one event listener.
+genrePage.addEventListener("click", function(event) {
+    // You're gonna have access to the button that was clicked. So use some data-attribute to get the genre that was clicked
+    console.log("Genre that was clicked", event.target);
+    console.log("Genre that was clicked", event.target.getAttribute("data-genre"));
+    surveyResults.genre = event.target.getAttribute("data-genre");
+
+    console.log("Survey results:", surveyResults);
     goToStreamingPage();
     selectedGenre = "Horror";
     fetchDataByGenre(selectedGenre);
 });
-genrePageBtn2.addEventListener("click", function(){
-    goToStreamingPage();
-    selectedGenre = "Sci-Fi & Fantasy";
-    fetchDataByGenre(selectedGenre);
-});
-genrePageBtn3.addEventListener("click", function(){
-    goToStreamingPage();
-    selectedGenre = "Romance";
-    fetchDataByGenre(selectedGenre);
-});
-genrePageBtn4.addEventListener("click", function(){
-    goToStreamingPage();
-    selectedGenre = "Comedy";
-    fetchDataByGenre(selectedGenre);
-});
-genrePageBtn5.addEventListener("click", function(){
-    goToStreamingPage();
-    selectedGenre = "Kids";
-    fetchDataByGenre(selectedGenre);
-});
+
+
+
+
+// genrePageBtn0.addEventListener("click", function(){
+//     goToStreamingPage();
+//     selectedGenre = "Action";
+//     fetchDataByGenre(selectedGenre);
+// });
+// genrePageBtn1.addEventListener("click", function(){
+//     goToStreamingPage();
+//     selectedGenre = "Horror";
+//     fetchDataByGenre(selectedGenre);
+// });
+// genrePageBtn2.addEventListener("click", function(){
+//     goToStreamingPage();
+//     selectedGenre = "Sci-Fi & Fantasy";
+//     fetchDataByGenre(selectedGenre);
+// });
+// genrePageBtn3.addEventListener("click", function(){
+//     goToStreamingPage();
+//     selectedGenre = "Romance";
+//     fetchDataByGenre(selectedGenre);
+// });
+// genrePageBtn4.addEventListener("click", function(){
+//     goToStreamingPage();
+//     selectedGenre = "Comedy";
+//     fetchDataByGenre(selectedGenre);
+// });
+// genrePageBtn5.addEventListener("click", function(){
+//     goToStreamingPage();
+//     selectedGenre = "Kids";
+//     fetchDataByGenre(selectedGenre);
+// });
 
 
 //Streaming page function and click listener
@@ -155,42 +184,83 @@ function fetchDataByStreaming(sources, selectedGenre) {
         })
 }
 
-streamingPageBtn0.addEventListener("click", function() {
+
+// Use event delegation, using this will help you need less query selectors (because you don't need a selector for each btn)
+// And will make your life easier, as you also will only need one event listener.
+
+streamingPage.addEventListener("click", function(event) {
+    console.log("streaming:", event.target.getAttribute('data-streaming'));
+    console.log(event.target.data);
+    var streaming = event.target.getAttribute('data-streaming');
+    surveyResults.streaming = streaming;
+    console.log("Survey results:", surveyResults);
+
     goToResultsPage();
-    fetchDataByStreaming("Netflix", selectedGenre);
+
+    // Actually show the results (in a different function maybe?)
+    // @TODO: move this into a separate function
+    var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type;
+    console.log("API URL:", apiUrl)
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            var filteredResults = [];
+            console.log(`data for listTitles`, data);
+
+            // @TODO: 
+            // You have the movies back in data, filtered by genre, streaming provider, etc.
+            // Now you actually display this on the page
+
+
+            for(var i = 0; i < data.length; i++) {
+                if(sources === data[i].name && selectedGenre === data[i].genre) {
+                    filteredResults.push(data[i]);
+                }
+            }
+            console.log(filteredResults)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
 });
-streamingPageBtn1.addEventListener("click", function() {
-    goToResultsPage();
-    fetchDataByStreaming("Max", selectedGenre);
-});
-streamingPageBtn2.addEventListener("click", function() {
-    goToResultsPage();
-    fetchDataByStreaming("Hulu", selectedGenre);
-});
-streamingPageBtn3.addEventListener("click", function() {
-    goToResultsPage();
-    fetchDataByStreaming("Amazon Prime", selectedGenre);
-});
-streamingPageBtn4.addEventListener("click", function() {
-    goToResultsPage();
-    fetchDataByStreaming("Vudu", selectedGenre);
-});
-streamingPageBtn5.addEventListener("click", function() {
-    goToResultsPage();
-    fetchDataByStreaming("Paramount", selectedGenre);
-});
-streamingPageBtn6.addEventListener("click", function() {
-    goToResultsPage();
-    fetchDataByStreaming("AppleTV", selectedGenre);
-});
-streamingPageBtn7.addEventListener("click", function() {
-    goToResultsPage();
-    fetchDataByStreaming("Disney+", selectedGenre);
-});
-streamingPageBtn8.addEventListener("click", function() {
-    goToResultsPage();
-    fetchDataByStreaming("Peacock", selectedGenre);
-});
+
+// streamingPageBtn0.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("Netflix", selectedGenre);
+// });
+// streamingPageBtn1.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("Max", selectedGenre);
+// });
+// streamingPageBtn2.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("Hulu", selectedGenre);
+// });
+// streamingPageBtn3.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("Amazon Prime", selectedGenre);
+// });
+// streamingPageBtn4.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("Vudu", selectedGenre);
+// });
+// streamingPageBtn5.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("Paramount", selectedGenre);
+// });
+// streamingPageBtn6.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("AppleTV", selectedGenre);
+// });
+// streamingPageBtn7.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("Disney+", selectedGenre);
+// });
+// streamingPageBtn8.addEventListener("click", function() {
+//     goToResultsPage();
+//     fetchDataByStreaming("Peacock", selectedGenre);
+// });
 
 function goToResultsPage2() {
     mainPage.style.display = "none";
