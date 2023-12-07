@@ -102,6 +102,8 @@ button {
 
 .streaming-page {
     display: none;
+    text-align: center;
+    margin-top: 300px;
 }
 
 .streaming-page h3 {
@@ -122,6 +124,7 @@ button {
     cursor: pointer;
     border-radius: 10px;
     margin: 10px; /* Add margin for space between buttons */
+    align-self: center;
     display: inline-block; /* Make buttons appear in the same line */
     
 }
@@ -154,6 +157,17 @@ button {
     color: white;
     font-size: 20px;
     font-family: 'Jost', sans-serif;
+}
+
+.selected {
+    background-color: #6080d900;
+    color: #827fe0;
+    border: 2px solid white;
+    cursor: pointer;
+}
+
+#result-col li{
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {

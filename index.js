@@ -4,6 +4,7 @@ var moveOrTvBtn = document.getElementById('movie-btn');
 var genrePage = document.querySelector('.genre-page');
 var streamingPage = document.querySelector('.streaming-page');
 var resultsPage = document.querySelector('.results-page');
+var prevResultsPage = document.querySelector('.prev-results-page')
 var prevResultsPageBtn = document.getElementById('prev-results-btn');
 const WatchmodeAPI = "cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp"
 const WikiAPI = "6e5f803bd59e151c8d9173f058396cb9"
@@ -46,6 +47,8 @@ function goToGenrePage() {
                         for (var i = 0; i < data.titles.length; i++) {
                             var li = document.createElement('li');
                             li.textContent = data.titles[i].title;
+                            li.setAttribute('data-title-id', data.titles[i].id);
+                            li.addEventListener('click', handleTitleClick);
                             firstColumnUl.appendChild(li);
                         }
                     }) 
@@ -54,7 +57,40 @@ function goToGenrePage() {
                         console.error('Error:', error);
                     });
             }
+
+            function handleTitleClick() {
+                var clickedListItem = event.currentTarget;
+                clickedListItem.classList.toggle('selected');
+                
+                var selectedTitleId = clickedListItem.getAttribute('data-title-id');
+                if (surveyResults.selectedTitles.includes(selectedTitleId)) {
+                    surveyResults.selectedTitles = surveyResults.selectedTitles.filter(id => id !== selectedTitleId);
+                } else {
+                    surveyResults.selectedTitles.push(selectedTitleId);
+                }
+                saveSelectedTitlesToLocalStorage();
+            }
+
+            surveyResults.selectedTitles = [];
+
+            function saveSelectedTitlesToLocalStorage() {
+                localStorage.setItem('selectedTitles', JSON.stringify(surveyResults.selectedTitles));
+            }
+
+            function loadSelectedTitlesFromLocalStorage() {
+                var storedTitles = localStorage.getItem('selectedTitles');
+                if (storedTitles) {
+                    surveyResults.selectedTitles = JSON.parse(storedTitles);
+                }
+            }
             
+            loadSelectedTitlesFromLocalStorage();
+
+            document.getElementById('result-col').addEventListener('click', function(event) {
+                if (event.target.tagName === 'LI') {
+                    handleTitleClick.call(event);
+                }
+            });
 
 mainPage.addEventListener("click", function(event) {
     // They clicked on either move or tv show, so store that selection
@@ -159,13 +195,18 @@ streamingPage.addEventListener("click", function(event) {
 //@TODO: Still have to save to local storage in the previous results page.
 
 function goToResultsPage2() {
+    console.log("Going to Results Page 2");
     mainPage.style.display = "none";
     genrePage.style.display = "none";
     streamingPage.style.display = "none";
-    resultsPage.style.display = "block";
+    resultsPage.style.display = "none";
+    prevResultsPage.style.display = "block"
 }
 
-prevResultsPageBtn.addEventListener("click", goToResultsPage2)
+prevResultsPageBtn.addEventListener("click", function(){
+    console.log("View Previous Results button clicked");
+    goToResultsPage2();
+})
 
 
     // Fill out form get type, genre, and source
