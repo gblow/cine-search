@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<!-- @TODO: Use bulma to set out the layout for all the pages -->
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +30,6 @@
 
     <!-- Main Page Section -->
     <!-- Use/Review Event Delegation (i.e., put an event listener on the parent element to listen for click on the children) -->
-    <!-- @TODO: Make sure all the type is spelled correctly/aligns with API docs -->
     <div class="main-page" id="main-page">
         <h3>Would you like to watch a Movie or T.V show?</h3>
         <button id="movie-btn" data-type="movie">Movie</button>
@@ -41,8 +43,7 @@
         <h3>What genre are you vibing with?</h3>
         <!-- in the single title api call it returns the genre id of a movie and the actually category. Use that to -->
         <!-- Set the data-genre attribute -->
-        <!-- "genres": [7], -->
-        <!-- genre_names": ["Drama"] -->
+    
         <button id="action-btn" data-genre="1">Action</button>
         <button id="drama-btn" data-genre="7">Drama</button>
         <button id="horror-btn" data-genre="11">Horror</button>
