@@ -270,3 +270,4 @@ prevResultsPageBtn.addEventListener("click", goToResultsPage2)
     // construct url with type genre id and source id and send api request to get data
 
     // Main page function and click listener
+    // comment
