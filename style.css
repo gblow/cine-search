@@ -52,7 +52,6 @@ button {
     margin-top: 300px;
 }
 
-
 .main-page h3 {
     text-align: center;
     margin-bottom: 20px;
@@ -76,6 +75,8 @@ button {
 
 .genre-page {
     display: none;
+    text-align: center;
+    margin-top: 300px;
 }
 
 .genre-page h3 {
@@ -95,6 +96,7 @@ button {
     cursor: pointer;
     border-radius: 10px;
     margin: 10px; /* Add margin for space between buttons */
+    align-self: center;
     display: center inline-block; /* Make buttons appear in the same line */
 }
 
@@ -159,3 +161,4 @@ button {
         margin: 10px 0; 
     }
 }
+

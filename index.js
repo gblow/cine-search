@@ -24,10 +24,6 @@ function goToGenrePage() {
     genrePage.style.display = "block";
 }
 
-
-
-'https://api.watchmode.com/v1/networks/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp'
-
 // Actually show the results (in a different function maybe?)
     // @TODO: move this into a separate function
     
@@ -37,7 +33,7 @@ function goToGenrePage() {
 
 
             function displayResults() {
-                var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&limit=20";
+                var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=popularity_desc" + "&limit=20";
             
                 fetch(apiUrl)
         .then(response => response.json())
@@ -149,12 +145,15 @@ function goToStreamingPage() {
 function fetchDataByGenre(genre) {
     var apiUrl = 'https://api.watchmode.com/v1/genres/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp'
 
-
-
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            console.log(`data for ${genre}:`, data);
+            for(var i = 0; i < data.length; i++) {
+                if(genre === data[i].name) {
+                    genreResults = data[i];
+                }
+            }
+            console.log(genreResults);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -172,29 +171,9 @@ genrePage.addEventListener("click", function(event) {
 
     console.log("Survey results:", surveyResults);
     goToStreamingPage();
-    fetchDataByGenre("Action")
+    selectedGenre = "";
+    fetchDataByGenre(selectedGenre);
 });
-genrePageBtn1.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("Horror")
-});
-genrePageBtn2.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("SciFi/Fantasy")
-});
-genrePageBtn3.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("Romance")
-});
-genrePageBtn4.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("Comedy")
-});
-genrePageBtn5.addEventListener("click", function(){
-    goToStreamingPage()
-    fetchDataByGenre("Kids/Animation")
-});
-
 
 //Streaming page function and click listener
 
@@ -237,16 +216,13 @@ streamingPage.addEventListener("click", function(event) {
     console.log("Survey results:", surveyResults);
 
     goToResultsPage();
-    fetchDataByStreaming("Netflix")
+    displayResults();
+
 });
-streamingPageBtn1.addEventListener("click", goToResultsPage);
-streamingPageBtn2.addEventListener("click", goToResultsPage);
-streamingPageBtn3.addEventListener("click", goToResultsPage);
-streamingPageBtn4.addEventListener("click", goToResultsPage);
-streamingPageBtn5.addEventListener("click", goToResultsPage);
-streamingPageBtn6.addEventListener("click", goToResultsPage);
-streamingPageBtn7.addEventListener("click", goToResultsPage);
-streamingPageBtn8.addEventListener("click", goToResultsPage);
+
+
+
+//@TODO: Still have to save to local storage in the previous results page.
 
 function goToResultsPage2() {
     mainPage.style.display = "none";
@@ -263,11 +239,4 @@ prevResultsPageBtn.addEventListener("click", goToResultsPage2)
     // Using sources api get the source id that matches the selected source, loop through data from sources api find matching source and grab it's id
     // construct url with type genre id and source id and send api request to get data
 
-
-    // Fill out form get type, genre, and source
-    // Using genre api get the genre id from the genre data array, loop through data from genre api find matching genre and grab it's id
-    // Using sources api get the source id that matches the selected source, loop through data from sources api find matching source and grab it's id
-    // construct url with type genre id and source id and send api request to get data
-
     // Main page function and click listener
-    // comment
