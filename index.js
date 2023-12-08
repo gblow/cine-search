@@ -17,6 +17,8 @@ var surveyResults = {
     streaming: '', // Streaming provider
 };
 
+var tmdbIds = []; // Array to store tmdb_id values
+
 
 
 function goToGenrePage() {
@@ -32,12 +34,100 @@ function goToGenrePage() {
             // Now you actually display this on the page
 
 
-            function displayResults() {
+
+                var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=popularity_desc" + "&limit=20";
+            
+                fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log("apiData", data);
+
+            var firstColumnUl = document.querySelector('#result-col .column:first-child ul');
+            var secondColumnUl = document.querySelector('#result-col .column:last-child ul');
+            firstColumnUl.innerHTML = '';
+            secondColumnUl.innerHTML = '';
+            tmdbIds = [];
+
+           
+
+            for (var i = 0; i < data.titles.length; i++) {
+                var li = document.createElement('li');
+                li.textContent = data.titles[i].title;
+                firstColumnUl.appendChild(li);
+
+                // Store tmdb_id in the array
+                tmdbIds.push(data.titles[i].tmdb_id);
+                var li2 = document.createElement('li');
+                li2.setAttribute("id", "video" + data.titles[i].tmdb_id)
+                secondColumnUl.appendChild(li2);
+            }
+
+                console.log("your IDs are", tmdbIds);
+
+
+                    //variable tmdbIds that contains the TMDB IDs from the displayed titles
+                    console.log('tmdbIdsArray:', tmdbIds);
+                    tmdbIds.forEach(function(tmdbId) {
+                        fetchTrailer(tmdbId);
+                    });
+                        
+                    }) 
+                
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+            
+        
+
+            function fetchTrailer(tmdbId) {
+                const apiUrl = `https://api.kinocheck.de/movies?tmdb_id=${tmdbId}&language=en&categories=Trailer`;
+
                 var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&limit=20";
+
             
                 fetch(apiUrl)
                     .then(response => response.json())
                     .then(data => {
+
+                        console.log(data);
+
+                        // Check if the response contains trailer data
+                        if (data.trailer) {
+                            var youtubeId = data.trailer.youtube_video_id;
+                            const trailerUrl = 'https://www.youtube.com/embed/' + youtubeId;
+            
+                            // Assuming you have an element in column 2 where you want to embed the trailer
+                            const trailerContainer = document.querySelector('#video' + tmdbId);
+            
+                            // Clear previous content
+                            trailerContainer.innerHTML = '';
+            
+                            // Create an iframe element to embed the trailer
+                            const iframe = document.createElement('iframe');
+                            iframe.src = trailerUrl;
+                            iframe.width = '100%';
+                            iframe.height = '400'; 
+                            iframe.allowFullscreen = true;
+            
+                            // Append the iframe to the trailer container
+                            trailerContainer.appendChild(iframe);
+                        } else {
+                            console.error('No trailer data available for TMDB ID:', tmdbId);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching trailer:', error);
+                    });
+            }
+            
+            // // Example usage:
+            // const tmdbId =  // Replace with your actual TMDB ID
+            // fetchTrailer(tmdbId);
+            
+
+    mainPage.addEventListener("click", function(event) {
+
                         console.log ("apiData",data)
             
                         var firstColumnUl = document.querySelector('#result-col .column:first-child ul');
@@ -57,6 +147,7 @@ function goToGenrePage() {
             
 
 mainPage.addEventListener("click", function(event) {
+
     // They clicked on either move or tv show, so store that selection
     console.log("event target is:", event.target);
     console.log("event target is:", event.target.getAttribute("data-type"));
@@ -146,15 +237,23 @@ function fetchDataByStreaming(sources, selectedGenre) {
 
 streamingPage.addEventListener("click", function(event) {
     console.log("streaming:", event.target.getAttribute('data-streaming'));
+
+    console.log("streaming:", event.target.getAttribute('data-streaming'));
+
     // console.log(event.target.data);
+
     var streaming = event.target.getAttribute('data-streaming');
     surveyResults.streaming = streaming;
     console.log("Survey results:", surveyResults);
 
     goToResultsPage();
     displayResults();
-})
 
+
+});
+
+
+})
 
 //@TODO: Still have to save to local storage in the previous results page.
 
@@ -173,4 +272,8 @@ prevResultsPageBtn.addEventListener("click", goToResultsPage2)
     // Using sources api get the source id that matches the selected source, loop through data from sources api find matching source and grab it's id
     // construct url with type genre id and source id and send api request to get data
 
+
     // Main page function and click listener
+
+    // Main page function and click listener
+
