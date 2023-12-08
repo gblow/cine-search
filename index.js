@@ -90,6 +90,7 @@ function goToGenrePage() {
                 saveSelectedTitlesToLocalStorage();
             }
 
+
             surveyResults.selectedTitles = [];
 
             function saveSelectedTitlesToLocalStorage() {
@@ -121,6 +122,10 @@ function goToGenrePage() {
                     apiUrl = `https://api.kinocheck.de/shows?tmdb_id=${tmdbId}&language=en&categories=Trailer`;
                 }
                 
+
+            function fetchTrailer(tmdbId) {
+                const apiUrl = `https://api.kinocheck.de/movies?tmdb_id=${tmdbId}&language=en&categories=Trailer`;
+
             
                 fetch(apiUrl)
                     .then(response => response.json())
