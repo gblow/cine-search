@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<!-- @TODO: Use bulma to set out the layout for all the pages -->
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,35 +29,43 @@
     
 
     <!-- Main Page Section -->
+    <!-- Use/Review Event Delegation (i.e., put an event listener on the parent element to listen for click on the children) -->
     <div class="main-page" id="main-page">
         <h3>Would you like to watch a Movie or T.V show?</h3>
-        <button id="movie-btn">Movie</button>
-        <button id="tv-btn">T.V Show</button>
+        <button id="movie-btn" data-type="movie">Movie</button>
+        <button id="tv-btn" data-type="tv_series">T.V Show</button>
     </div>
 
     <!-- Second Page with Genre -->
+    <!-- @TODO: Make sure all the genres are spelled correctly/align with API docs -->
+    <!-- @TODO: These should actually be ids as well. Find the ids to put in data-genre from the API docs somewhere -->
     <div class="genre-page" id="genre-page">
         <h3>What genre are you vibing with?</h3>
-        <button id="action-btn">Action</button>
-        <button id="horror-btn">Horror</button>
-        <button id="scifi-btn">Science Fiction/Fantasy</button>
-        <button id="rom-btn">Romance</button>
-        <button id="com-btn">Comedy</button>
-        <button id="kids-btn">Kids/Animation</button>
+        <!-- in the single title api call it returns the genre id of a movie and the actually category. Use that to -->
+        <!-- Set the data-genre attribute -->
+    
+        <button id="action-btn" data-genre="1">Action</button>
+        <button id="drama-btn" data-genre="7">Drama</button>
+        <button id="horror-btn" data-genre="11">Horror</button>
+        <button id="scifi-btn" data-genre="40">Science Fiction/Fantasy</button>
+        <button id="rom-btn" data-genre="14">Romance</button>
+        <button id="com-btn" data-genre="4">Comedy</button>
+        <button id="kids-btn" data-genre="21">Kids</button>
     </div>
 
     <!-- Third Page with Streaming Services -->
+    <!-- @TODO: Code all the ids in here for the actual streaming providers -->
     <div class="streaming-page" id="streaming-page">
         <h3>What is your preferred streaming service?</h3>
-        <button id="netflix-btn">Netflix</button>
-        <button id="max-btn">Max</button>
-        <button id="hulu-btn">Hulu</button>
-        <button id="amazon-btn">Amazon Prime</button>
-        <button id="vudu-btn">Vudu</button>
-        <button id="paramount-btn">Paramount</button>
-        <button id="apple-btn">Apple TV</button>
-        <button id="disney-btn">Disney+</button>
-        <button id="peacock-btn">Peacock</button>
+        <button id="netflix-btn" data-streaming="203">Netflix</button>
+        <button id="max-btn" data-streaming="387">Max</button>
+        <button id="hulu-btn" data-streaming="157">Hulu</button>
+        <button id="amazon-btn" data-streaming="26">Prime video</button>
+        <button id="vudu-btn" data-streaming="307">Vudu</button>
+        <button id="paramount-btn" data-streaming="444">Paramount</button>
+        <button id="apple-btn" data-streaming="371">Apple TV</button>
+        <button id="disney-btn" data-streaming="372">Disney+</button>
+        <button id="peacock-btn" data-streaming="389">Peacock</button>
     </div>
 
     <!-- Fourth Page with Results -->
@@ -65,13 +76,14 @@
             <div class="columns" id="result-col">
                 <div class="column">
                     First column
+                <ul></ul>
                 </div>
                 <div class="column">
                     Second column
                 </div>
             </div>
-        </div>
-    </div>
+
     <script src="index.js" defer></script>
+
 </body>
 </html>
