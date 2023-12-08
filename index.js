@@ -16,9 +16,7 @@ var surveyResults = {
     genre: '',
     streaming: '', // Streaming provider
 };
-
 var tmdbIds = []; // Array to store tmdb_id values
-
 
 
 function goToGenrePage() {
@@ -34,7 +32,7 @@ function goToGenrePage() {
             // Now you actually display this on the page
 
 
-
+            function displayResults() {
                 var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=popularity_desc" + "&limit=20";
             
                 fetch(apiUrl)
@@ -82,14 +80,10 @@ function goToGenrePage() {
 
             function fetchTrailer(tmdbId) {
                 const apiUrl = `https://api.kinocheck.de/movies?tmdb_id=${tmdbId}&language=en&categories=Trailer`;
-
-                var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&limit=20";
-
             
                 fetch(apiUrl)
                     .then(response => response.json())
                     .then(data => {
-
                         console.log(data);
 
                         // Check if the response contains trailer data
@@ -127,27 +121,6 @@ function goToGenrePage() {
             
 
     mainPage.addEventListener("click", function(event) {
-
-                        console.log ("apiData",data)
-            
-                        var firstColumnUl = document.querySelector('#result-col .column:first-child ul');
-                        firstColumnUl.innerHTML = '';
-
-                        for (var i = 0; i < data.titles.length; i++) {
-                            var li = document.createElement('li');
-                            li.textContent = data.titles[i].title;
-                            firstColumnUl.appendChild(li);
-                        }
-                    }) 
-                
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
-            
-
-mainPage.addEventListener("click", function(event) {
-
     // They clicked on either move or tv show, so store that selection
     console.log("event target is:", event.target);
     console.log("event target is:", event.target.getAttribute("data-type"));
@@ -237,11 +210,7 @@ function fetchDataByStreaming(sources, selectedGenre) {
 
 streamingPage.addEventListener("click", function(event) {
     console.log("streaming:", event.target.getAttribute('data-streaming'));
-
     console.log("streaming:", event.target.getAttribute('data-streaming'));
-
-    // console.log(event.target.data);
-
     var streaming = event.target.getAttribute('data-streaming');
     surveyResults.streaming = streaming;
     console.log("Survey results:", surveyResults);
@@ -249,11 +218,9 @@ streamingPage.addEventListener("click", function(event) {
     goToResultsPage();
     displayResults();
 
-
 });
 
 
-})
 
 //@TODO: Still have to save to local storage in the previous results page.
 
@@ -272,8 +239,4 @@ prevResultsPageBtn.addEventListener("click", goToResultsPage2)
     // Using sources api get the source id that matches the selected source, loop through data from sources api find matching source and grab it's id
     // construct url with type genre id and source id and send api request to get data
 
-
     // Main page function and click listener
-
-    // Main page function and click listener
-
