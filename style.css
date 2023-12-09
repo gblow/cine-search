@@ -7,10 +7,18 @@
     font-family: 'Jost', sans-serif;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     background-image: linear-gradient(to right top, #a178df, #827fe0, #6384dd, #4487d6, #2589cb, #0087bd, #0084ae, #00809f, #00788a, #006f73, #00655b, #005b44);
     background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 button {

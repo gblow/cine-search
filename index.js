@@ -3,10 +3,9 @@ var moveOrTvBtn = document.getElementById('movie-btn');
 var genrePage = document.querySelector('.genre-page');
 var streamingPage = document.querySelector('.streaming-page');
 var resultsPage = document.querySelector('.results-page');
-var prevResultsPage = document.querySelector('.prev-results-page')
+var prevResultsPage = document.querySelector('.prev-results-page');
 var prevResultsPageBtn = document.getElementById('prev-results-btn');
-const WatchmodeAPI = "cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp"
-const WikiAPI = "6e5f803bd59e151c8d9173f058396cb9"
+const WatchmodeAPI = "39dYos0Qi4qs0M0lAYGP7u9WSIlEWozJJPhaLKHM";
 var type = "";
 var genreResults = "";
 var selectedGenre = "";
@@ -33,7 +32,7 @@ function goToGenrePage() {
 
 
             function displayResults() {
-                var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=popularity_desc" + "&limit=20";
+                var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=39dYos0Qi4qs0M0lAYGP7u9WSIlEWozJJPhaLKHM&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=relevance_desc" + "&limit=20";
             
                 fetch(apiUrl)
         .then(response => response.json())
@@ -227,7 +226,7 @@ function goToStreamingPage() {
 
 //Genre page function and click listener
 function fetchDataByGenre(genre) {
-    var apiUrl = 'https://api.watchmode.com/v1/genres/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp'
+    var apiUrl = 'https://api.watchmode.com/v1/genres/?apiKey=39dYos0Qi4qs0M0lAYGP7u9WSIlEWozJJPhaLKHM'
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -270,7 +269,7 @@ function goToResultsPage() {
 }
 
 function fetchDataByStreaming(sources, selectedGenre) {
-    var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&source_ids=203'
+    var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=39dYos0Qi4qs0M0lAYGP7u9WSIlEWozJJPhaLKHM&source_ids=203'
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -305,9 +304,6 @@ streamingPage.addEventListener("click", function(event) {
 
 });
 
-
-
-//@TODO: Still have to save to local storage in the previous results page.
 
 function goToResultsPage2() {
     console.log("Going to Results Page 2");
