@@ -114,6 +114,8 @@ function goToGenrePage() {
                         console.error('Error fetching trailer:', error);
                     });
             }
+
+            
             
             // // Example usage:
             // const tmdbId =  // Replace with your actual TMDB ID
