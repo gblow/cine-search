@@ -11,8 +11,8 @@
   <title>CineSearch</title>
   <meta name="Description" content="Enter your description here"/>
   <!-- Include your stylesheets -->
-  <link rel="reset" href="reset.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="reset" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -72,14 +72,16 @@
     <div class="results-page" id="results-page">
         <div class="results-table">
             <h3>Results</h3>
+            <h5> Want to save the results for later? Just click on the title and it will be saved to previous results.</h5>
+            
             <!-- Use Bulma columns for layout -->
             <div class="columns" id="result-col">
                 <div class="column">
-                    First column
+                   <h1 class="resultsHeader">Popular Titles </h1> 
                 <ul></ul>
                 </div>
                 <div class="column">
-                    Second column
+                    <h1 class="resultsHeader">Trailers</h1>
                     <ul></ul>
                 </div>
             </div>
@@ -94,7 +96,7 @@
         </div>
     </div>        
 
-    <script src="index.js" defer></script>
+    <script src="./assets/js/index.js" defer></script>
 
 </body>
 </html>
