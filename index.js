@@ -1,6 +1,5 @@
 var mainPage = document.querySelector('.main-page');
-var moveOrTvBtn = document.getElementById('movie-btn'); 
-// var mainPageBtn1 = document.getElementById('tv-btn'); 
+var moveOrTvBtn = document.getElementById('movie-btn');  
 var genrePage = document.querySelector('.genre-page');
 var streamingPage = document.querySelector('.streaming-page');
 var resultsPage = document.querySelector('.results-page');
@@ -77,17 +76,19 @@ function goToGenrePage() {
                     });
             }
             
+            // 
             function handleTitleClick() {
-                var clickedListItem = event.currentTarget;
+                var clickedListItem = event.target;
                 clickedListItem.classList.toggle('selected');
                 
-                var selectedTitleId = clickedListItem.getAttribute('data-title-id');
+                var selectedTitleId = clickedListItem.textContent;
                 if (surveyResults.selectedTitles.includes(selectedTitleId)) {
                     surveyResults.selectedTitles = surveyResults.selectedTitles.filter(id => id !== selectedTitleId);
                 } else {
                     surveyResults.selectedTitles.push(selectedTitleId);
                 }
                 saveSelectedTitlesToLocalStorage();
+                displaySelectedTitles()
             }
 
             surveyResults.selectedTitles = [];
@@ -100,10 +101,41 @@ function goToGenrePage() {
                 var storedTitles = localStorage.getItem('selectedTitles');
                 if (storedTitles) {
                     surveyResults.selectedTitles = JSON.parse(storedTitles);
+                    displaySelectedTitles();
                 }
+            }
+
+            // Displays the selected titles to the previous results page with a button option next to each title.
+            // The button has the capability to remove the title from the list.
+            function displaySelectedTitles() {
+                var prevResultsList = document.getElementById('previous-results-list');
+                prevResultsList.innerHTML = '';
+
+                surveyResults.selectedTitles.forEach(function(title) {
+                    var li = document.createElement('li');
+                    var titleText = document.createTextNode(title);
+                    li.appendChild(titleText);
+
+                    var removeBtn = document.createElement('button');
+                    removeBtn.textContent = 'Watched';
+                    removeBtn.addEventListener('click', function() {
+                        removeTitle(title);
+                    });
+
+                    li.appendChild(removeBtn);
+                    prevResultsList.appendChild(li);
+                })
+            }
+
+            // Removes title from the saved list and updates the new list to the local storage
+            function removeTitle(title) {
+                surveyResults.selectedTitles = surveyResults.selectedTitles.filter(t => t !== title);
+                saveSelectedTitlesToLocalStorage();
+                displaySelectedTitles();
             }
             
             loadSelectedTitlesFromLocalStorage();
+            displaySelectedTitles();
 
             document.getElementById('result-col').addEventListener('click', function(event) {
                 if (event.target.tagName === 'LI') {
@@ -233,6 +265,7 @@ function goToResultsPage() {
     genrePage.style.display = "none";
     streamingPage.style.display = "none";
     resultsPage.style.display = "block";
+    prevResultsPage.style.display = "none";
 }
 
 function fetchDataByStreaming(sources, selectedGenre) {
@@ -284,15 +317,19 @@ function goToResultsPage2() {
     prevResultsPage.style.display = "block"
 }
 
-prevResultsPageBtn.addEventListener("click", function(){
-    console.log("View Previous Results button clicked");
-    goToResultsPage2();
+// button to navingate to the prev results
+prevResultsPageBtn.addEventListener("click", function() {
+    if (prevResultsPageBtn.textContent === 'View Previous Results') {
+        goToResultsPage2();
+        prevResultsPageBtn.textContent = 'Back to Results';
+    } else {
+        goToResultsPage();
+        prevResultsPageBtn.textContent = 'View Previous Results';
+    }
 })
 
+//  button to navigate back to the results page
+document.getElementById('back-to-results-btn').addEventListener('click', function() {
+    goToResultsPage(); 
+});
 
-    // Fill out form get type, genre, and source
-    // Using genre api get the genre id from the genre data array, loop through data from genre api find matching genre and grab it's id
-    // Using sources api get the source id that matches the selected source, loop through data from sources api find matching source and grab it's id
-    // construct url with type genre id and source id and send api request to get data
-
-    // Main page function and click listener

@@ -170,6 +170,34 @@ button {
     cursor: pointer;
 }
 
+/* prev results page */
+.prev-results-page {
+    display: none;
+    color: black;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 30px;
+}
+
+.prev-results-page h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 50px;
+}
+
+.prev-results-page button {
+    margin-left: 5px;
+    background-color: #6080d900;
+    color: white;
+    padding: 5px 5px;
+    font-size: 20px;
+    border: solid;
+    border-color: white;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
 @media (max-width: 600px) {
     .genre-page button {
         margin: 10px 0; 
