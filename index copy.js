@@ -1,5 +1,6 @@
 var mainPage = document.querySelector('.main-page');
-var moveOrTvBtn = document.getElementById('movie-btn');  
+var moveOrTvBtn = document.getElementById('movie-btn'); 
+// var mainPageBtn1 = document.getElementById('tv-btn'); 
 var genrePage = document.querySelector('.genre-page');
 var streamingPage = document.querySelector('.streaming-page');
 var resultsPage = document.querySelector('.results-page');
@@ -16,7 +17,7 @@ var surveyResults = {
     genre: '',
     streaming: '', // Streaming provider
 };
-var tmdbIds = []; // Array to store tmdb_id values
+
 
 
 function goToGenrePage() {
@@ -36,59 +37,38 @@ function goToGenrePage() {
                 var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=cokcLMHE2H1fuhy7JrUfLRhE81oeqANAcPdOEOzp&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=popularity_desc" + "&limit=20";
             
                 fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            console.log("apiData", data);
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log ("apiData",data)
+            
+                        var firstColumnUl = document.querySelector('#result-col .column:first-child ul');
+                        firstColumnUl.innerHTML = '';
 
-            var firstColumnUl = document.querySelector('#result-col .column:first-child ul');
-            var secondColumnUl = document.querySelector('#result-col .column:last-child ul');
-            firstColumnUl.innerHTML = '';
-            secondColumnUl.innerHTML = '';
-            tmdbIds = [];
-
-           
-
-            for (var i = 0; i < data.titles.length; i++) {
-                var li = document.createElement('li');
-                li.textContent = data.titles[i].title;
-                firstColumnUl.appendChild(li);
-
-                // Store tmdb_id in the array
-                tmdbIds.push(data.titles[i].tmdb_id);
-                var li2 = document.createElement('li');
-                li2.setAttribute("id", "video" + data.titles[i].tmdb_id)
-                secondColumnUl.appendChild(li2);
-            }
-
-                console.log("your IDs are", tmdbIds);
-
-
-                    //variable tmdbIds that contains the TMDB IDs from the displayed titles
-                    console.log('tmdbIdsArray:', tmdbIds);
-                    tmdbIds.forEach(function(tmdbId) {
-                        fetchTrailer(tmdbId);
-                    });
-                        
+                        for (var i = 0; i < data.titles.length; i++) {
+                            var li = document.createElement('li');
+                            li.textContent = data.titles[i].title;
+                            li.setAttribute('data-title-id', data.titles[i].id);
+                            li.addEventListener('click', handleTitleClick);
+                            firstColumnUl.appendChild(li);
+                        }
                     }) 
                 
                     .catch(error => {
                         console.error('Error:', error);
                     });
             }
-            
-            // 
+
             function handleTitleClick() {
-                var clickedListItem = event.target;
+                var clickedListItem = event.currentTarget;
                 clickedListItem.classList.toggle('selected');
                 
-                var selectedTitleId = clickedListItem.textContent;
+                var selectedTitleId = clickedListItem.getAttribute('data-title-id');
                 if (surveyResults.selectedTitles.includes(selectedTitleId)) {
                     surveyResults.selectedTitles = surveyResults.selectedTitles.filter(id => id !== selectedTitleId);
                 } else {
                     surveyResults.selectedTitles.push(selectedTitleId);
                 }
                 saveSelectedTitlesToLocalStorage();
-                displaySelectedTitles()
             }
 
             surveyResults.selectedTitles = [];
@@ -101,114 +81,22 @@ function goToGenrePage() {
                 var storedTitles = localStorage.getItem('selectedTitles');
                 if (storedTitles) {
                     surveyResults.selectedTitles = JSON.parse(storedTitles);
-                    displaySelectedTitles();
                 }
-            }
-
-            // Displays the selected titles to the previous results page with a button option next to each title.
-            // The button has the capability to remove the title from the list.
-            function displaySelectedTitles() {
-                var prevResultsList = document.getElementById('previous-results-list');
-                prevResultsList.innerHTML = '';
-
-                surveyResults.selectedTitles.forEach(function(title) {
-                    var li = document.createElement('li');
-                    var titleText = document.createTextNode(title);
-                    li.appendChild(titleText);
-
-                    var removeBtn = document.createElement('button');
-                    removeBtn.textContent = 'Watched';
-                    removeBtn.addEventListener('click', function() {
-                        removeTitle(title);
-                    });
-
-                    li.appendChild(removeBtn);
-                    prevResultsList.appendChild(li);
-                })
-            }
-
-            // Removes title from the saved list and updates the new list to the local storage
-            function removeTitle(title) {
-                surveyResults.selectedTitles = surveyResults.selectedTitles.filter(t => t !== title);
-                saveSelectedTitlesToLocalStorage();
-                displaySelectedTitles();
             }
             
             loadSelectedTitlesFromLocalStorage();
-            displaySelectedTitles();
 
             document.getElementById('result-col').addEventListener('click', function(event) {
                 if (event.target.tagName === 'LI') {
                     handleTitleClick.call(event);
                 }
             });
-        
 
-            function fetchTrailer(tmdbId) {
-                var apiUrl = '';
-                console.log(type)
-                if (type === 'movie'){
-                    apiUrl = `https://api.kinocheck.de/movies?tmdb_id=${tmdbId}&language=en&categories=Trailer`;
-                } else {
-                    apiUrl = `https://api.kinocheck.de/shows?tmdb_id=${tmdbId}&language=en&categories=Trailer`;
-                }
-                
-
-            
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        const trailerContainer = document.querySelector('#video' + tmdbId);
-                        // Check if the response contains trailer data
-                        if (data.trailer) {
-                            var youtubeId = data.trailer.youtube_video_id;
-                            const trailerUrl = 'https://www.youtube.com/embed/' + youtubeId;
-            
-                            // Assuming you have an element in column 2 where you want to embed the trailer
-                            
-            
-                            // Clear previous content
-                            trailerContainer.innerHTML = '';
-            
-                            // Create an iframe element to embed the trailer
-                            const iframe = document.createElement('iframe');
-                            iframe.src = trailerUrl;
-                            iframe.width = '100%';
-                            iframe.height = '100'; 
-                            iframe.allowFullscreen = true;
-            
-                            // Append the iframe to the trailer container
-                            trailerContainer.appendChild(iframe);
-                        } else {
-                           
-   
-                            let img = document.createElement('img');
-                            img.src = './assets/noVideo.png';
-                            img.style.width = '400px';
-                            img.style.height = '100';
-                            trailerContainer.appendChild(img);
-
-                            console.error('No trailer data available for TMDB ID:', tmdbId);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching trailer:', error);
-                    });
-            }
-
-           
-            
-            // // Example usage:
-            // const tmdbId =  // Replace with your actual TMDB ID
-            // fetchTrailer(tmdbId);
-            
-
-    mainPage.addEventListener("click", function(event) {
+mainPage.addEventListener("click", function(event) {
     // They clicked on either move or tv show, so store that selection
     console.log("event target is:", event.target);
     console.log("event target is:", event.target.getAttribute("data-type"));
-    type = event.target.getAttribute("data-type");
+    var type = event.target.getAttribute("data-type");
     surveyResults.type = type;
     console.log("Survey results", surveyResults);
 
@@ -266,7 +154,6 @@ function goToResultsPage() {
     genrePage.style.display = "none";
     streamingPage.style.display = "none";
     resultsPage.style.display = "block";
-    prevResultsPage.style.display = "none";
 }
 
 function fetchDataByStreaming(sources, selectedGenre) {
@@ -295,16 +182,14 @@ function fetchDataByStreaming(sources, selectedGenre) {
 
 streamingPage.addEventListener("click", function(event) {
     console.log("streaming:", event.target.getAttribute('data-streaming'));
-    console.log("streaming:", event.target.getAttribute('data-streaming'));
+    // console.log(event.target.data);
     var streaming = event.target.getAttribute('data-streaming');
     surveyResults.streaming = streaming;
     console.log("Survey results:", surveyResults);
 
     goToResultsPage();
     displayResults();
-
-});
-
+})
 
 
 //@TODO: Still have to save to local storage in the previous results page.
@@ -318,19 +203,15 @@ function goToResultsPage2() {
     prevResultsPage.style.display = "block"
 }
 
-// button to navingate to the prev results
-prevResultsPageBtn.addEventListener("click", function() {
-    if (prevResultsPageBtn.textContent === 'View Previous Results') {
-        goToResultsPage2();
-        prevResultsPageBtn.textContent = 'Back to Results';
-    } else {
-        goToResultsPage();
-        prevResultsPageBtn.textContent = 'View Previous Results';
-    }
+prevResultsPageBtn.addEventListener("click", function(){
+    console.log("View Previous Results button clicked");
+    goToResultsPage2();
 })
 
-//  button to navigate back to the results page
-document.getElementById('back-to-results-btn').addEventListener('click', function() {
-    goToResultsPage(); 
-});
 
+    // Fill out form get type, genre, and source
+    // Using genre api get the genre id from the genre data array, loop through data from genre api find matching genre and grab it's id
+    // Using sources api get the source id that matches the selected source, loop through data from sources api find matching source and grab it's id
+    // construct url with type genre id and source id and send api request to get data
+
+    // Main page function and click listener
