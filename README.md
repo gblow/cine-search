@@ -40,8 +40,12 @@ https://gblow.github.io/cine-search/
 ## Link to GitHub Repo
 https://github.com/gblow/cine-search 
 
-## Screenshots/Gif
--- blank for now
+## Screenshots
+![ screenshot ](<assets/Screenshot 2023-12-09 at 7.36.55 PM.png>)
+![screenshot2](<assets/Screenshot 2023-12-09 at 7.37.02 PM.png>)
+![screenshot 3](<assets/Screenshot 2023-12-09 at 7.37.14 PM.png>)
+![screenshot 4](<assets/Screenshot 2023-12-09 at 7.37.28 PM.png>)
+![screenshot 5](<assets/Screenshot 2023-12-09 at 7.37.41 PM.png>) 
 
 ## Technologies Used
 HTML, CSS, JavaScript, WatchMode API, Kino Check API
