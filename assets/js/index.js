@@ -1,3 +1,4 @@
+// Global variables
 var mainPage = document.querySelector('.main-page');
 var moveOrTvBtn = document.getElementById('movie-btn');  
 var genrePage = document.querySelector('.genre-page');
@@ -11,26 +12,20 @@ var genreResults = "";
 var selectedGenre = "";
 var sourcesResults = "";
 var surveyResults = {
-    type: '', // either tv or move
-    genre: '',
+    type: '', // Either tv or movie
+    genre: '', // Selected genre
     streaming: '', // Streaming provider
 };
 var tmdbIds = []; // Array to store tmdb_id values
 
-
+// Manipulates what page is visable in the window
+// Displays the genre page
 function goToGenrePage() {
     mainPage.style.display = "none";
     genrePage.style.display = "block";
 }
-
-// Actually show the results (in a different function maybe?)
-    // @TODO: move this into a separate function
     
-            // @TODO: 
-            // You have the movies back in data, filtered by genre, streaming provider, etc.
-            // Now you actually display this on the page
-
-
+            //  API call to gather the movie or tv show, genre, and streaming service data from WatchMode to be saved to the surveyResults object
             function displayResults() {
                 var apiUrl = 'https://api.watchmode.com/v1/list-titles/?apiKey=39dYos0Qi4qs0M0lAYGP7u9WSIlEWozJJPhaLKHM&genre=' + surveyResults.genre + '&source_ids=' + surveyResults.streaming + "&types=" + surveyResults.type + "&sort_by=popularity_desc" + "&limit=20";
             
@@ -75,7 +70,7 @@ function goToGenrePage() {
                     });
             }
             
-            // 
+            // Allows the user to select different titles from the created list on the results page 
             function handleTitleClick() {
                 var clickedListItem = event.target;
                 clickedListItem.classList.toggle('selected');
@@ -92,10 +87,12 @@ function goToGenrePage() {
 
             surveyResults.selectedTitles = [];
 
+            // Saves the users selected titles to the local storage
             function saveSelectedTitlesToLocalStorage() {
                 localStorage.setItem('selectedTitles', JSON.stringify(surveyResults.selectedTitles));
             }
 
+            // Displays the saved items in the local storage to the Previous Results Page
             function loadSelectedTitlesFromLocalStorage() {
                 var storedTitles = localStorage.getItem('selectedTitles');
                 if (storedTitles) {
@@ -142,7 +139,7 @@ function goToGenrePage() {
                 }
             });
         
-
+            // API call that gathers trailer data from Kinocheck
             function fetchTrailer(tmdbId) {
                 var apiUrl = '';
                 console.log(type)
@@ -212,7 +209,7 @@ function goToGenrePage() {
             
 
     mainPage.addEventListener("click", function(event) {
-    // They clicked on either move or tv show, so store that selection
+    // They clicked on either movie or tv show, so store that selection
     console.log("event target is:", event.target);
     console.log("event target is:", event.target.getAttribute("data-type"));
     type = event.target.getAttribute("data-type");
@@ -224,7 +221,7 @@ goToGenrePage();
 moveOrTvBtn.addEventListener("click", goToGenrePage);
 
 
-
+// Displays the streaming page
 function goToStreamingPage() {
     mainPage.style.display = "none";
     genrePage.style.display = "none";
@@ -251,11 +248,8 @@ function fetchDataByGenre(genre) {
         })
 }
 
-
-// Use event delegation, using this will help you need less query selectors (because you don't need a selector for each btn)
-// And will make your life easier, as you also will only need one event listener.
+// Uses even delegation to put an event listener on each button of the genre page
 genrePage.addEventListener("click", function(event) {
-    // You're gonna have access to the button that was clicked. So use some data-attribute to get the genre that was clicked
     console.log("Genre that was clicked", event.target);
     console.log("Genre that was clicked", event.target.getAttribute("data-genre"));
     surveyResults.genre = event.target.getAttribute("data-genre");
@@ -266,8 +260,7 @@ genrePage.addEventListener("click", function(event) {
     fetchDataByGenre(selectedGenre);
 });
 
-//Streaming page function and click listener
-
+// Displays the results page
 function goToResultsPage() {
     mainPage.style.display = "none";
     genrePage.style.display = "none";
@@ -297,9 +290,7 @@ function fetchDataByStreaming(sources, selectedGenre) {
 }
 
 
-// Use event delegation, using this will help you need less query selectors (because you don't need a selector for each btn)
-// And will make your life easier, as you also will only need one event listener.
-
+// Uses even delegation to put an event listener on each button of the streaming page
 streamingPage.addEventListener("click", function(event) {
     console.log("streaming:", event.target.getAttribute('data-streaming'));
     console.log("streaming:", event.target.getAttribute('data-streaming'));
@@ -313,9 +304,7 @@ streamingPage.addEventListener("click", function(event) {
 });
 
 
-
-//@TODO: Still have to save to local storage in the previous results page.
-
+// Displays the Previous Results Page
 function goToResultsPage2() {
     console.log("Going to Results Page 2");
     mainPage.style.display = "none";

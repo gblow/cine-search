@@ -29,7 +29,6 @@
     
 
     <!-- Main Page Section -->
-    <!-- Use/Review Event Delegation (i.e., put an event listener on the parent element to listen for click on the children) -->
     <div class="main-page" id="main-page">
         <h3>Would you like to watch a Movie or T.V show?</h3>
         <button id="movie-btn" data-type="movie">Movie</button>
@@ -37,13 +36,8 @@
     </div>
 
     <!-- Second Page with Genre -->
-    <!-- @TODO: Make sure all the genres are spelled correctly/align with API docs -->
-    <!-- @TODO: These should actually be ids as well. Find the ids to put in data-genre from the API docs somewhere -->
     <div class="genre-page" id="genre-page">
         <h3>What genre are you vibing with?</h3>
-        <!-- in the single title api call it returns the genre id of a movie and the actually category. Use that to -->
-        <!-- Set the data-genre attribute -->
-    
         <button id="action-btn" data-genre="39">Action</button>
         <button id="drama-btn" data-genre="7">Drama</button>
         <button id="horror-btn" data-genre="11">Horror</button>
@@ -54,7 +48,6 @@
     </div>
 
     <!-- Third Page with Streaming Services -->
-    <!-- @TODO: Code all the ids in here for the actual streaming providers -->
     <div class="streaming-page" id="streaming-page">
         <h3>What is your preferred streaming service?</h3>
         <button id="netflix-btn" data-streaming="203">Netflix</button>
@@ -88,7 +81,7 @@
         </div>
     </div>
 
-
+<!-- Fifth page that displays the users selected titles -->
     <div class="prev-results-page" id="prev-results-page">
         <div class="results-table">
             <h3>To Watch Later</h3>
